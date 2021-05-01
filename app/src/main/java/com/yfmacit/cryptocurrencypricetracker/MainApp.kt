@@ -1,20 +1,17 @@
 package com.yfmacit.cryptocurrencypricetracker
 
+import android.app.Activity
 import android.app.Application
 import com.yfmacit.cryptocurrencypricetracker.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class MainApp : Application(), HasAndroidInjector {
+class MainApp : Application(), HasActivityInjector {
 
     @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return androidInjector
-    }
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
@@ -23,5 +20,9 @@ class MainApp : Application(), HasAndroidInjector {
             .application(this)
             .build()
             .inject(this)
+    }
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return dispatchingAndroidInjector
     }
 }

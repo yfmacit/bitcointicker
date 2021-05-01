@@ -1,4 +1,7 @@
 package com.yfmacit.cryptocurrencypricetracker.ui.login
 
-interface LoginNavigator {
+import com.yfmacit.cryptocurrencypricetracker.ui.base.BaseNavigator
+
+interface LoginNavigator: BaseNavigator {
+   fun onSuccessLogin()
 }

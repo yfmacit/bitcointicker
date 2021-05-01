@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Cryptocurrency Price Tracker</string>
+
+
+    <!-- Login -->
+    <string name="hint_email">E-Mail</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Login</string>
+
+    <!-- Common Dialog -->
+    <string name="button_positive">YES</string>
+    <string name="button_negative">NO</string>
+
+    <!-- Bottom Navigation -->
+    <string name="bottom_menu_home">Home</string>
+    <string name="bottom_menu_favourite">Favourite</string>
+
+    <!-- CoinListFragment -->
+    <string name="title_coin_list">Crypto Currency List</string>
+    <string name="search_box_hint">Search</string>
+
+    <!-- CoinDetailFragment -->
+    <string name="coin_name_title">NAME</string>
+    <string name="coin_symbol_title">SYMBOL</string>
+    <string name="coin_hash_algorithm_title">HASH ALGORITHM</string>
+    <string name="coin_price_change_title">PRICE CHANGE PERCENTAGE LAST 24</string>
+    <string name="coin_description_title">DESCRIPTION</string>
+    <string name="add_favourite">Add Fav</string>
+    <string name="remove_favourite">Remove Fav</string>
+
+    <!-- FavouriteFragment -->
+    <string name="title_favourite">Favourite List</string>
+    <string name="empty_favourite_list">Empty</string>
+
 </resources>
