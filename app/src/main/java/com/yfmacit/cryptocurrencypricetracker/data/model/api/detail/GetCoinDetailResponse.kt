@@ -46,7 +46,7 @@ data class GetCoinDetailResponse(
                 value = if (marketData?.priceChangePercentage24h ?: 0.0 > 0)
                     "+"
                 else
-                    "-"
+                    ""
                 value += marketData?.priceChangePercentage24h.toString()
                 value
             }

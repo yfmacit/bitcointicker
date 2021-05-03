@@ -10,6 +10,10 @@
     <!-- Common Dialog -->
     <string name="button_positive">YES</string>
     <string name="button_negative">NO</string>
+    <string name="dialog_set_price_refresh_message">Set the refresh time (seconds).</string>
+    <string name="dialog_value_hint">Enter the value here</string>
+    <string name="dialog_value_error_hint">Enter the correct value</string>
+    <string name="button_set">SET</string>
 
     <!-- Bottom Navigation -->
     <string name="bottom_menu_home">Home</string>
@@ -23,6 +27,7 @@
     <string name="coin_name_title">NAME</string>
     <string name="coin_symbol_title">SYMBOL</string>
     <string name="coin_hash_algorithm_title">HASH ALGORITHM</string>
+    <string name="coin_current_price_title">CURRENT PRICE (USD)</string>
     <string name="coin_price_change_title">PRICE CHANGE PERCENTAGE LAST 24</string>
     <string name="coin_description_title">DESCRIPTION</string>
     <string name="add_favourite">Add Fav</string>

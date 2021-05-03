@@ -1,6 +1,8 @@
 package com.yfmacit.cryptocurrencypricetracker.ui.dashboard.coindetail
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.yfmacit.cryptocurrencypricetracker.data.DataManager
 import com.yfmacit.cryptocurrencypricetracker.data.model.api.detail.GetCoinDetailResponse
 import com.yfmacit.cryptocurrencypricetracker.data.model.api.list.CoinListItem
@@ -13,7 +15,13 @@ class CoinDetailViewModel(dataManager: DataManager, schedulerProvider: Scheduler
 ) : BaseViewModel<CoinDetailNavigator>(dataManager, schedulerProvider) {
     var isAddedFavourite : ObservableField<Boolean> = ObservableField(false)
     var coinDetail : ObservableField<GetCoinDetailResponse> = ObservableField()
+    var coinSimplePrice: ObservableField<String> = ObservableField("-")
+    var coinSimplePriceRefreshIntervalSecond: ObservableField<Int> = ObservableField(30)
     var last24HoursPercentageRiseUp: ObservableField<Boolean> = ObservableField(false)
+
+    fun setSimplePriceRefreshIntervalClicked() {
+        navigator.setSimplePriceRefreshInterval(coinSimplePriceRefreshIntervalSecond.get()?:30)
+    }
 
     fun fetchCoinDetail(coinId: String) {
         navigator.showLoading()
@@ -30,9 +38,14 @@ class CoinDetailViewModel(dataManager: DataManager, schedulerProvider: Scheduler
                             if (this != null)
                                 isAddedFavourite.set(true)
                         }
+
+                        if (t.marketData?.currentPrice?.usd != null)
+                            coinSimplePrice.set(t.marketData?.currentPrice?.usd?.toString())
+
                         if (t.marketData?.priceChangePercentage24h ?: 0.0 > 0.0)
                             last24HoursPercentageRiseUp.set(true)
 
+                        navigator.refreshPrice()
                         navigator.hideLoading()
                     }
 
@@ -41,6 +54,28 @@ class CoinDetailViewModel(dataManager: DataManager, schedulerProvider: Scheduler
                         navigator.showMessage(AppEnums.MessageStatus.ERROR, "Failed",
                             "Failed operation, please try again later.",
                             null, null)
+                    }
+
+                    override fun onComplete() {
+                    }
+                })
+        )
+    }
+
+    fun fetchCoinSimplePrice() {
+        val coinId = coinDetail.get()?.id?:""
+        compositeDisposable.add(
+            dataManager.getCoinSimplePrice(coinId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(object : DisposableObserver<JsonObject>() {
+                    override fun onNext(t: JsonObject) {
+                        if (t[coinId] != null && t[coinId].asJsonObject["usd"] != null){
+                            coinSimplePrice.set(t[coinId].asJsonObject["usd"].toString())
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
                     }
 
                     override fun onComplete() {

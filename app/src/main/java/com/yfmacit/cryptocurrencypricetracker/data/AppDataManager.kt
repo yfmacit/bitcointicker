@@ -2,6 +2,7 @@ package com.yfmacit.cryptocurrencypricetracker.data
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.yfmacit.cryptocurrencypricetracker.data.local.AppPreferencesHelper
 import com.yfmacit.cryptocurrencypricetracker.data.model.api.list.CoinListItem
 import com.yfmacit.cryptocurrencypricetracker.data.model.api.detail.GetCoinDetailResponse
@@ -54,6 +55,10 @@ class AppDataManager
 
     override fun getCoinDetailImpl(coinId: String): Observable<GetCoinDetailResponse> {
         return mCoinGeckoApiHelper.getCoinDetailImpl(coinId)
+    }
+
+    override fun getCoinSimplePrice(coinId: String): Observable<JsonObject> {
+        return mCoinGeckoApiHelper.getCoinSimplePrice(coinId)
     }
 
     // Firebase Auth
